@@ -97,7 +97,7 @@ func Poller(in <-chan *Resource, out chan<- *Resource, status chan<- State) {
 	}
 }
 
-func main() {
+func main2() {
 	// Create our input and output channels.
 	pending, complete := make(chan *Resource), make(chan *Resource)
 
