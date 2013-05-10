@@ -109,7 +109,7 @@ func ratioString(vals ...int) string {
 	return s
 }
 
-func main() {
+func main3() {
 	strategies := make([]strategy, win)
 	for k := range strategies {
 		strategies[k] = stayAtK(k + 1)

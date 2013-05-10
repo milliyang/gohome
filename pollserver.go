@@ -11,8 +11,11 @@
 package main
 
 import (
+	"fmt"
+	"image/png"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -97,7 +100,7 @@ func Poller(in <-chan *Resource, out chan<- *Resource, status chan<- State) {
 	}
 }
 
-func main2() {
+func main() {
 	// Create our input and output channels.
 	pending, complete := make(chan *Resource), make(chan *Resource)
 
@@ -116,7 +119,45 @@ func main2() {
 		}
 	}()
 
-	for r := range complete {
-		go r.Sleep(pending)
+	//for r := range complete {
+	//	go r.Sleep(pending)
+	//}
+
+	// open input file
+	fi, err := os.Open("logo4w.png")
+	if err != nil {
+		panic(err)
 	}
+	// close fi on exit and check for its returned error
+	defer func() {
+		if err := fi.Close(); err != nil {
+			panic(err)
+		}
+	}()
+
+	// open output file
+	fo, err := os.Create("output.png")
+	if err != nil {
+		panic(err)
+	}
+	// close fo on exit and check for its returned error
+	defer func() {
+		if err := fo.Close(); err != nil {
+			panic(err)
+		}
+	}()
+
+	// make a read buffer
+	//r := bufio.NewReader(fi)
+	//ima, s, err := image.Decode(r)
+
+	pic, err := png.Decode(fi)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, ": %v\n", err)
+		return
+	}
+	b := pic.Bounds()
+	outImg := Resize(pic, b, b.Dx()*15/20, b.Dy()*15/20)
+
+	png.Encode(fo, outImg)
 }
