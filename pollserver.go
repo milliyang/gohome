@@ -4,18 +4,26 @@
 
 /*  copy from http://localhost:6060/doc/codewalk/sharemem/ 
     Codewalk: Share Memory By Communicating
+<<<<<<< HEAD
 
     at ?/doc/codewalk/urlpoll.go
+=======
+>>>>>>> bff99e977f4982ff76c8713f75148ab0f61694b4
 */
 
 package main
 
 import (
+<<<<<<< HEAD
 	"fmt"
 	"image/png"
 	"log"
 	"net/http"
 	"os"
+=======
+	"log"
+	"net/http"
+>>>>>>> bff99e977f4982ff76c8713f75148ab0f61694b4
 	"time"
 )
 
@@ -119,6 +127,7 @@ func main() {
 		}
 	}()
 
+<<<<<<< HEAD
 	//for r := range complete {
 	//	go r.Sleep(pending)
 	//}
@@ -160,4 +169,9 @@ func main() {
 	outImg := Resize(pic, b, b.Dx()*15/20, b.Dy()*15/20)
 
 	png.Encode(fo, outImg)
+=======
+	for r := range complete {
+		go r.Sleep(pending)
+	}
+>>>>>>> bff99e977f4982ff76c8713f75148ab0f61694b4
 }
