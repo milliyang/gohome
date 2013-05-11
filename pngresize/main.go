@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"net"
 	"os"
 )
 
@@ -25,8 +26,30 @@ var (
 
 func main() {
 
+	//loopDir(xhdpi)
+	listInterface()
+
+}
+
+func listInterface() {
+	fmt.Println("Leo print interface")
+
+	inf, err := net.Interfaces()
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, one := range inf {
+		fmt.Println(one.Name, "\t", one.HardwareAddr, "\t", one)
+	}
+
+	eth0 := inf[1]
+	fmt.Println(eth0.Addrs())
+
+}
+
+func loopDir(path string) {
 	// open input file
-	fi, err := os.Open("xhdpi")
+	fi, err := os.Open(path)
 	if err != nil {
 		panic(err)
 	}
@@ -41,7 +64,6 @@ func main() {
 			convert(dir.Name(), false)
 		}
 	}
-
 }
 
 func convert(file string, toDdpi bool) {
